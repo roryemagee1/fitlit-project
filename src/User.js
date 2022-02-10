@@ -1,5 +1,5 @@
 class User {
-  constructor(userData) {
+constructor(userData) {
     this.id = userData.id;
     this.name = userData.name;
     this.address = userData.address;
@@ -16,4 +16,3 @@ class User {
 }
 
 export default User;
-// module.exports = User;
