@@ -2,30 +2,42 @@
 // Do not delete or rename this file ********
 import './css/styles.css';
 import './images/turing-logo.png'
-import userData from './data/users';
+// import userData from './data/users';
 import UserRepository from './UserRepository';
 import User from './User';
-
-
+// import userData from './apiCalls.js';
+import {getUserData, getSleepData, getHydrationData} from './apiCalls'
 // QUERY SELECTORS
 const welcomeBox = document.querySelector('.welcome-box');
 const userStepGoalBox = document.querySelector('.user-step-goals');
 
 //EVENT LISTENERS
-welcomeBox.addEventListener('load', updateMainBox());
-userStepGoalBox.addEventListener('load', updateStepGoalBox());
+let newUser;
+let newRepo;
+const x = () => {
+  return Promise.all([
+    getUserData,
+    getHydrationData,
+    getSleepData,
+  ]).then(data => {
+    newRepo = new UserRepository(data[0])
+    console.log(newRepo)
+    newUser = new User(newRepo.allData[0][1])
+    console.log(newUser)
+  }).catch(err => console.log(err))
+}
 
 // FUNCTIONS
+// fetchData()
 
 function newUserInstance() {
-  const newUser = new User(userData[1]);
-  return newUser;
+
 };
 
-function newRepositoryInstance() {
-  const newRepo = new UserRepository(userData);
-  return newRepo;
-}
+// function newRepositoryInstance() {
+//   const newRepo = new UserRepository(fetchData());
+//   return newRepo;
+// }
 
 function welcomeUser() {
   const newUser = newUserInstance();
@@ -50,11 +62,11 @@ function updateMainBox() {
     </div>`
 };
 
-function updateStepGoalBox() {
-  const newUser = newUserInstance();
-  return newUser.stepGoal
-}
 
+
+window.addEventListener('load', x())
+welcomeBox.addEventListener('load', updateMainBox());
+userStepGoalBox.addEventListener('load', updateStepGoalBox());
 
 
 
