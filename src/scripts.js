@@ -6,7 +6,7 @@ import './images/turing-logo.png'
 import UserRepository from './UserRepository';
 import User from './User';
 // import userData from './apiCalls.js';
-import {getUserData, getSleepData, getHydrationData} from './apiCalls'
+import {getUserData, getSleepData, getHydrationData} from './apiCalls.js'
 // QUERY SELECTORS
 const welcomeBox = document.querySelector('.welcome-box');
 const userStepGoalBox = document.querySelector('.user-step-goals');
@@ -14,18 +14,35 @@ const userStepGoalBox = document.querySelector('.user-step-goals');
 //EVENT LISTENERS
 let newUser;
 let newRepo;
-const x = () => {
-  return Promise.all([
-    getUserData,
-    getHydrationData,
-    getSleepData,
-  ]).then(data => {
-    newRepo = new UserRepository(data[0])
-    console.log(newRepo)
-    newUser = new User(newRepo.allData[0][1])
-    console.log(newUser)
-  }).catch(err => console.log(err))
+let theData;
+
+Promise.all([getUserData, getHydrationData, getSleepData]).then(data => {
+  console.log(data);
+  newRepo = new UserRepository(data[0].userData);
+  newUser = new User(newRepo.allData[1]);
+  console.log(newRepo);
+  console.log(newUser);
+  testDataOutput();
+  });
+
+function testDataOutput() {
+  welcomeBox.innerHTML += `<h1> ${newUser.name} is free! </h1>`;
 }
+
+
+
+// const x = () => {
+//   return Promise.all([
+//     getUserData,
+//     getHydrationData,
+//     getSleepData,
+//   ]).then(data => {
+//     newRepo = new UserRepository(data[0])
+//     console.log(newRepo)
+//     newUser = new User(newRepo.allData[0][1])
+//     console.log(newUser)
+//   }).catch(err => console.log(err))
+// }
 
 // FUNCTIONS
 // fetchData()
