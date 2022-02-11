@@ -4,7 +4,9 @@ import './css/styles.css';
 import './images/turing-logo.png'
 import UserRepository from './UserRepository';
 import User from './User';
+import Hydration from './Hydration.js'
 import {getUserData, getSleepData, getHydrationData} from './apiCalls.js'
+
 
 // QUERY SELECTORS
 const welcomeBox = document.querySelector('.welcome-box');
@@ -14,8 +16,15 @@ const userStepGoalBox = document.querySelector('.user-step-goals');
 
 // DOM
 Promise.all([getUserData, getHydrationData, getSleepData]).then(data => {
+  console.log(data)
+
   let newRepo = new UserRepository(data[0].userData);
+  let hydrationRepo = new UserRepository(data[1]);
+  console.log(hydrationRepo);
   let jarvis = new User(newRepo.allData[1]);
+  console.log(jarvis.id, 'hiiiii')
+  let hydration = new Hydration(jarvis.id, hydrationRepo);
+  console.log(hydration.showAvgDailyOz(), 'jarvis hydration');
   updateMainBox(jarvis, newRepo);
 });
 

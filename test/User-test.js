@@ -1,14 +1,21 @@
 import { expect } from 'chai';
 import User from '../src/User';
-import userData from '../src/apiCalls.js';
+// import getUserData from '../src/apiCalls.js';
+import {getUserData, getHydrationData, getSleepData} from '../src/scripts.js'
+import fetch from "node-fetch";
 
 describe('User', () => {
 
-  let user1, user2;
+  let user1, user2, newRepo;
 
     beforeEach(() => {
-      user1 = new User(userData[0]);
-      user2 = new User(userData[1]);
+      Promise.all([getUserData, getHydrationData, getSleepData]).then(data => {
+        let newRepo = new UserRepository(data[1].userData);
+        let user1 = new User(newRepo.allData[1]);
+        let user2 = new User(newRepo.allData[0]);
+      });
+      // user1 = new User(getUserData[0]);
+      // user2 = new User(getUserData[1]);
     });
 
   it('should be a function', () => {
