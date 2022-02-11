@@ -25,6 +25,7 @@ Promise.all([getUserData, getHydrationData, getSleepData]).then(data => {
   console.log(jarvis.id, 'hiiiii')
   let hydration = new Hydration(jarvis.id, hydrationRepo);
   console.log(hydration.showAvgDailyOz(), 'jarvis hydration');
+  console.log(hydration.showTodaysOz('2020/01/22'), 'water date');
   updateMainBox(jarvis, newRepo);
 });
 
