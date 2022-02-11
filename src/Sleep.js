@@ -8,7 +8,10 @@ class Sleep {
     return output.reduce((acc, curr) => acc + curr) / output.length;
   }
 
-  
+  avgSleepQuality() {
+    const output = this.sleepRepo.filter(data => data.userID === this.id).map(data => data.sleepQuality)
+    return output.reduce((acc, curr) => acc + curr) / output.length;
+  }
 
 }
 
