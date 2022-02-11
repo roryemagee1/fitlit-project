@@ -45,8 +45,11 @@ function updateMainBox(person, repo) {
 function updateHydrationBox(hydraRepo) {
   hydrationBox.innerHTML += `
   <p>Today's Water Consumption</p>
-  <p>${hydraRepo.showTodaysOz()}</p>`
+  <p>${hydraRepo.showTodaysOz()}</p>
+  <p>Water Consumption Over Last 7 Days</p>
+  <p>${hydraRepo.showWeeklyOz()}</p>`
 }
+
 
 
 
