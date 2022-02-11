@@ -21,8 +21,10 @@ Promise.all([getUserData, getHydrationData, getSleepData]).then(data => {
 
   let newRepo = new UserRepository(data[0].userData);
   let hydrationRepo = new UserRepository(data[1]);
+  let sleepRepo = new UserRepository(data[2]);
   let jarvis = new User(newRepo.allData[1]);
   let hydration = new Hydration(jarvis.id, hydrationRepo);
+  let sleep = new Sleep();
   updateMainBox(jarvis, newRepo);
   updateHydrationBox(hydration);
 });
