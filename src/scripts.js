@@ -28,7 +28,7 @@ Promise.all([getUserData, getHydrationData, getSleepData]).then(data => {
   let sleep = new Sleep(jarvis.id, sleepRepo);
   updateMainBox(jarvis, newRepo);
   updateHydrationBox(hydration);
-  console.log(sleep.avgSleepQuality())
+  console.log(sleep.hoursSleptDay('2020/01/22'))
 });
 
 function updateMainBox(person, repo) {

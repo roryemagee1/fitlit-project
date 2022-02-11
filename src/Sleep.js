@@ -13,6 +13,10 @@ class Sleep {
     return output.reduce((acc, curr) => acc + curr) / output.length;
   }
 
+  hoursSleptDay(date) {
+    const output = this.sleepRepo.filter(data => data.userID === this.id).find(data => data.date === date)
+    return output.hoursSlept
+  }
 }
 
 export default Sleep;
