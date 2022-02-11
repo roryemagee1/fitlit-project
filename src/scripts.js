@@ -20,13 +20,8 @@ Promise.all([getUserData, getHydrationData, getSleepData]).then(data => {
 
   let newRepo = new UserRepository(data[0].userData);
   let hydrationRepo = new UserRepository(data[1]);
-  // console.log(hydrationRepo);
   let jarvis = new User(newRepo.allData[1]);
-  // console.log(jarvis.id, 'hiiiii')
   let hydration = new Hydration(jarvis.id, hydrationRepo);
-  // console.log(hydration.showAvgDailyOz(), 'jarvis hydration');
-  // console.log(hydration.showTodaysOz('2020/01/22'), 'water date');
-  console.log(hydration.showWeeklyOz(), 'yesss');
   updateMainBox(jarvis, newRepo);
 });
 
@@ -44,6 +39,10 @@ function updateMainBox(person, repo) {
       <p>${repo.averageStepGoal()} </p>
     </div>`
 };
+
+function updateHydrationBox() {
+
+}
 
 
 
