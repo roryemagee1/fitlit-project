@@ -11,21 +11,22 @@ import {getUserData, getSleepData, getHydrationData} from './apiCalls.js'
 // QUERY SELECTORS
 const welcomeBox = document.querySelector('.welcome-box');
 const userStepGoalBox = document.querySelector('.user-step-goals');
+const hydrationBox = document.querySelector('.hydration-box');
 
 // EVENT LISTENERS
 
 // DOM
 Promise.all([getUserData, getHydrationData, getSleepData]).then(data => {
-  console.log(data)
+  // console.log(data)
 
   let newRepo = new UserRepository(data[0].userData);
   let hydrationRepo = new UserRepository(data[1]);
-  console.log(hydrationRepo);
+  let sleepRepo = new UserRepository(data[2]);
   let jarvis = new User(newRepo.allData[1]);
-  console.log(jarvis.id, 'hiiiii')
   let hydration = new Hydration(jarvis.id, hydrationRepo);
-  console.log(hydration.showAvgDailyOz(), 'jarvis hydration');
+  let sleep = new Sleep();
   updateMainBox(jarvis, newRepo);
+  updateHydrationBox(hydration);
 });
 
 function updateMainBox(person, repo) {
@@ -42,6 +43,15 @@ function updateMainBox(person, repo) {
       <p>${repo.averageStepGoal()} </p>
     </div>`
 };
+
+function updateHydrationBox(hydraRepo) {
+  hydrationBox.innerHTML += `
+  <p>Today's Water Consumption</p>
+  <p>${hydraRepo.showTodaysOz()}</p>
+  <p>Water Consumption Over Last 7 Days</p>
+  <p>${hydraRepo.showWeeklyOz()}</p>`
+}
+
 
 
 
