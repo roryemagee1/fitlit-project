@@ -17,7 +17,11 @@ class Hydration{
     return output.numOunces
   }
   showWeeklyOz() {
-
+    const output = this.hydrationRepo.filter(data => data.userID === this.id)
+    output.splice(0, output.length -7)
+    // .sort((a,b) => b.numOunces-a.numOunces)
+    // console.log(output, 'yesss')
+    return output.map(data => data.numOunces);
   }
 }
 
