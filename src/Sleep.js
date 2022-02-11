@@ -17,6 +17,12 @@ class Sleep {
     const output = this.sleepRepo.filter(data => data.userID === this.id).find(data => data.date === date)
     return output.hoursSlept
   }
+
+  sleepQualityDay(date) {
+    const output = this.sleepRepo.filter(data => data.userID === this.id).find(data => data.date === date)
+    return output.sleepQuality
+  }
+  
 }
 
 export default Sleep;
