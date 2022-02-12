@@ -26,9 +26,20 @@ class Sleep {
   hoursSleptWeek(start) {
     const output = this.sleepRepo.filter(data => data.userID === this.id)
     const indexDate = output.findIndex(data => data.date === start);
-    console.log(indexDate)
       return output.map(data => data.hoursSlept).slice(indexDate, indexDate + 7);
     }
+
+  qualitySleepWeek(start) {
+    const output = this.sleepRepo.filter(data => data.userID === this.id)
+    const indexDate = output.findIndex(data => data.date === start);
+      return output.map(data => data.sleepQuality).slice(indexDate, indexDate + 7);
+    }
+
+  avgSleepQualityAll() {
+    const output = this.sleepRepo.map(data => data.sleepQuality)
+    return output.reduce((acc, curr) => acc + curr) / output.length
+  }
+
   }
 
 
