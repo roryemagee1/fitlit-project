@@ -9,7 +9,6 @@ class Hydration{
     return output.reduce((acc, curr) => acc + curr) / output.length
   }
   showTodaysOz() {
-    // const output = this.hydrationRepo.filter(data => data.userID === this.id).find(data => data.date === waterDate)
     const output = this.hydrationRepo.filter(data => data.userID === this.id).pop()
     return output.numOunces
   }
