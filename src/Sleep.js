@@ -22,7 +22,15 @@ class Sleep {
     const output = this.sleepRepo.filter(data => data.userID === this.id).find(data => data.date === date)
     return output.sleepQuality
   }
-  
-}
+
+  hoursSleptWeek(start) {
+    const output = this.sleepRepo.filter(data => data.userID === this.id)
+    const indexDate = output.findIndex(data => data.date === start);
+    console.log(indexDate)
+      return output.map(data => data.hoursSlept).slice(indexDate, indexDate + 7);
+    }
+  }
+
+
 
 export default Sleep;
