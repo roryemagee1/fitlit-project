@@ -1,7 +1,7 @@
 class Hydration{
   constructor(id, hydrationRepo) {
     this.id = id;
-    this.hydrationRepo = hydrationRepo.allData.hydrationData;
+    this.hydrationRepo = hydrationRepo.allData;
   }
   showAvgDailyOz() {
     const output = this.hydrationRepo.filter(data => data.userID === this.id).map(data => data.numOunces)

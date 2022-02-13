@@ -1,20 +1,36 @@
 import { expect } from 'chai';
-import User from '../src/User';
-import userData from '../src/apiCalls.js';
-// import {getUserData, getHydrationData, getSleepData} from '../src/apiCalls.js'
-import Hydration Sample from '..data/hydration-sample';
-// 
-// Promise.all([getUserData, getHydrationData, getSleepData]).then(data => {
-//   let newRepo = new UserRepository(data[1].userData);
-//   let jarvis = new User(newRepo.allData[1]);
-// });
+import UserRepository from '../src/UserRepository';
+import Hydration from '../src/Hydration';
+import hydrationSample from '../src/data/hydration-sample';
+import userData from '../src/data/users';
 
-// describe('User', () => {
-//
-//   let user1, user2;
-//
-//     beforeEach(() => {
-//       user1 = new User(userData[0]);
-//       user2 = new User(userData[1]);
-//     });
-//   }
+describe('Hydration', () => {
+
+  let hydro1, hydro2, hydroRepo;
+
+    beforeEach(() => {
+      hydroRepo = new UserRepository(hydrationSample);
+      hydro1 = new Hydration(1, hydroRepo);
+      hydro2 = new Hydration(2, hydroRepo);
+      });
+
+  it('should be a function', () => {
+    expect(Hydration).to.be.a('function');
+  })
+
+  it('should show the average daily ounces of water drank', () => {
+    expect(hydro1.showAvgDailyOz()).to.equal(59);
+    expect(hydro2.showAvgDailyOz()).to.equal(61.5);
+  })
+
+  it('should show the water drank today', () => {
+    expect(hydro1.showTodaysOz()).to.equal(99);
+    expect(hydro2.showTodaysOz()).to.equal(56);
+  })
+
+  it('should show the water drank in the last week', () => {
+    expect(hydro1.showWeeklyOz()).to.deep.equal([ 39, 61, 51, 52, 29, 57, 99 ]);
+    expect(hydro2.showWeeklyOz()).to.deep.equal([ 58, 44, 33, 67, 27, 70, 56 ]);
+  })
+
+})
