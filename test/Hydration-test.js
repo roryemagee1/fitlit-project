@@ -16,11 +16,19 @@ describe('Hydration', () => {
 
   it('should be a function', () => {
     expect(Hydration).to.be.a('function');
-  });
+  })
 
-  it('should take in objects as parameters', () => {
-    expect(hydro1).to.be.an('object');
-    expect(hydro2).to.be.an('object');
+  it('should show the average daily ounces of water drank', () => {
+    expect(hydro1.showAvgDailyOz()).to.equal(59);
+    expect(hydro2.showAvgDailyOz()).to.equal(61.5);
+  })
+
+  it('should show the water drank today', () => {
+    expect(hydro1.showTodaysOz()).to.equal(99);
+  })
+
+  it('should show the water drank in the last week', () => {
+    expect(hydro1.showWeeklyOz()).to.deep.equal([ 39, 61, 51, 52, 29, 57, 99 ]);
   })
 
 })

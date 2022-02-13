@@ -1,7 +1,7 @@
 class Sleep {
   constructor(id, sleepRepo) {
     this.id = id;
-    this.sleepRepo = sleepRepo.allData.sleepData;
+    this.sleepRepo = sleepRepo.allData;
   }
   avgHoursSlept() {
     const output = this.sleepRepo.filter(data => data.userID === this.id).map(data => data.hoursSlept)
