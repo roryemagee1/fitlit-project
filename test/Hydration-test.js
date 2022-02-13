@@ -25,10 +25,12 @@ describe('Hydration', () => {
 
   it('should show the water drank today', () => {
     expect(hydro1.showTodaysOz()).to.equal(99);
+    expect(hydro2.showTodaysOz()).to.equal(56);
   })
 
   it('should show the water drank in the last week', () => {
     expect(hydro1.showWeeklyOz()).to.deep.equal([ 39, 61, 51, 52, 29, 57, 99 ]);
+    expect(hydro2.showWeeklyOz()).to.deep.equal([ 58, 44, 33, 67, 27, 70, 56 ]);
   })
 
 })
