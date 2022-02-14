@@ -15,12 +15,8 @@ const userStepGoalBox = document.querySelector('.user-step-goals');
 const hydrationBox = document.querySelector('.hydration-box');
 const sleepBox = document.querySelector('.sleep-box')
 
-// EVENT LISTENERS
-
 // DOM
 Promise.all([getUserData, getHydrationData, getSleepData]).then(data => {
-  // console.log(data)
-
   let newRepo = new UserRepository(data[0].userData);
   let hydrationRepo = new UserRepository(data[1].hydrationData);
   let sleepRepo = new UserRepository(data[2].sleepData);
@@ -70,21 +66,3 @@ function updateSleepBox(sleepRepo) {
   <p>All Time Average Hours Slept</p>
   <p>${sleepRepo.avgHoursSlept()}</p>`
 }
-
-
-
-
-
-
-
-
-
-
-// console.log(userData,"<>>>>userData")
-// An example of how you tell webpack to use a CSS file
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-
-// console.log('This is the JavaScript entry file - your code begins here.');
-
-// An example of how you tell webpack to use a JS file

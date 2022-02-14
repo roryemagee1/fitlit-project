@@ -3,6 +3,7 @@ class Hydration{
     this.id = id;
     this.hydrationRepo = hydrationRepo.allData;
   }
+  
   showAvgDailyOz() {
     const output = this.hydrationRepo.filter(data => data.userID === this.id).map(data => data.numOunces)
 
@@ -19,10 +20,5 @@ class Hydration{
     return output.map(data => data.numOunces);
   }
 }
-
-
-
-
-
 
 export default Hydration;
