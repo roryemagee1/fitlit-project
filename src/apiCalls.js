@@ -5,8 +5,4 @@ const getHydrationData = fetch('https://fitlit-api.herokuapp.com/api/v1/hydratio
 
 const getSleepData = fetch('https://fitlit-api.herokuapp.com/api/v1/sleep').then(response => response.json());
 
-
-
 export {getUserData, getSleepData, getHydrationData};
-
-console.log('I will be a fetch request!')
