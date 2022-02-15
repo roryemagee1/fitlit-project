@@ -1,82 +1,59 @@
-# FitLit Starter Kit
+# FitLit
 
-The details of this project are outline in [this project spec](http://frontend.turing.io/projects/fitlit.html).
+## Table of Contents
 
-## Setup
+  - [Introduction](#Introduction)
+  - [Set Up and Installation](#Set-Up)
+  - [Technologies](#Technologies)
+  - [Illustrations](#Illustrations)
+  - [Possible Future Extensions](#Possible-Future-Extensions)
+  - [Contributors](#Collaborators)
+  - [Sources](#Sources)
+  - [Project Specs](#Project-Specs)
 
-1. Within your group, decide on one person to have the project repository (repo) on their GitHub account. Then, that person should fork this repo - on the top right corner of this page, click the **Fork** button.
-1. Both memebers of the group should clone down the _forked_ repo. Since you don't want to name your project "activity-tracker-starter", you can use an optional argument when you run git clone (you replace the [...] with the terminal command arguments): `git clone [remote-address] [what you want to name the repo]`
-1. Once you have cloned the repo, change into the directory and install the project dependencies. Run `npm install` to install project dependencies.
-1. Run `npm start` in the terminal to see the HTML page (you should see some boilerplate HTML displayed on the page)
-1. Make sure both members of your team are collaborators on the forked repo.
+## Introduction
 
-## Testing
+FitLit is an activity tracker that shows a user's individual activity and wellness data.
+Users are able to view their sleep, step and hydration stats, along with that user's data in relation to a database of other user's data. Test driven development was used to drive the implementation of our code, making sure the data presented for each day is accurate.
 
-There is no boilerplate for testing in this starter-kit repo. You will need to set this up yourself. However, if you ran `npm install`, then the tooling you need to start testing is already installed (`mocha` and `chai`).
+## Set Up and Installation
 
-## Linting Your Code
+1. Clone down the project repository by opening up your console and entering the following command: git clone git@github.com:roryemagee1/fitlit-project.git
+2. Once the repo has been cloned, change into the root directory and install the project dependencies using npm install
+3. Run npm start to start the server
+4. Copy and paste the local host code into your browser to see the working app
 
-Run the command in your terminal `npm run lint` to run the linter on your JavaScript code. There will be errors and warnings right from the start in this starter kit, but that's ok - the linter is still running successfully.
 
-Your linter will look only at the JavaScript files you have within the `src` and the `test` directories.
+## Technologies
+  - Javascript
+  - HTML
+  - CSS
+  - Mocha
+  - Chai
 
-## Data Model
+## Illustrations
 
-**Users**
 
-```
-[
-  {
-    "id": [number],
-    "name": [string],
-    "address": [string],
-    "email": [string],
-    "strideLength": [number - feet],
-    "dailyStepGoal": [number - steps],
-    "friends": [array - one-way connection to other user(s)]
-  },
-  ...more user data
-]
-```
+<img width="1428" alt="Screen Shot 2022-02-14 at 7 06 32 PM" src="https://user-images.githubusercontent.com/92279624/153973273-d3857732-5be9-4921-b721-98132e4b36a5.png">
 
-**Activity**
 
-```
-[
-  {
-    "userID": [number],
-    "date": [string YYYY/MM/DD],
-    "numSteps": [number - steps],
-    "minutesActive": [number - minutes],
-    "flightsOfStairs": [number - flights]
-  },
-  ...more activity data
-]
-```
 
-**Hydration**
 
-```
-[
-  {
-    "userID": [number],
-    "date": [string YYYY/MM/DD],
-    "numOunces": [number - ounces]
-  },
-  ...more hydration data
-]
-```
+## Possible Future Extensions
 
-**Sleep**
+  - Add activity tracker which allows users to track specific step goals and milestones
+  - Add styling using SCSS to improve display
 
-```
-[
-  {
-    "userID": [number],
-    "date": [string YYYY/MM/DD],
-    "hoursSlept": [number - hours],
-    "sleepQuality": [number - unitless]
-  },
-  ...more sleep data
-]
-```
+## Contributors
+
+  - [Sam Mistele](https://github.com/SamusMist)
+  - [Ali Nooner](https://github.com/AliNooner)
+  - [Rory Magee](https://github.com/roryemagee1)
+
+
+## Sources
+  - [MDN - promiseAll( )](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)
+  - [W3Schools](https://www.w3schools.com/)
+
+## Project Specs
+  - The project spec & rubric can be found [here](https://frontend.turing.edu/projects/Fitlit-part-one.html)
