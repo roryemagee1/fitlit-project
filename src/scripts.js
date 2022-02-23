@@ -14,7 +14,7 @@ const hydrationBox = document.querySelector('.hydration-box');
 const sleepBox = document.querySelector('.sleep-box')
 
 // DOM
-Promise.all([getUserData, getHydrationData, getSleepData]).then(data => {
+Promise.all([getUserData(), getHydrationData(), getSleepData()]).then(data => {
   let newRepo = new UserRepository(data[0].userData);
   let hydrationRepo = new UserRepository(data[1].hydrationData);
   let sleepRepo = new UserRepository(data[2].sleepData);
