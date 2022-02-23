@@ -15,7 +15,7 @@ const hydrationBox = document.querySelector('.hydration-box');
 const sleepBox = document.querySelector('.sleep-box')
 
 // DOM
-Promise.all([fetchData(user), fetchData(sleep), fetchData(hydration)]).then(data => {
+let makePromise = () => {Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep')]).then(data => {
   let newRepo = new UserRepository(data[0].userData);
   let hydrationRepo = new UserRepository(data[1].hydrationData);
   let sleepRepo = new UserRepository(data[2].sleepData);
@@ -25,8 +25,8 @@ Promise.all([fetchData(user), fetchData(sleep), fetchData(hydration)]).then(data
   updateMainBox(jarvis, newRepo);
   updateHydrationBox(hydration);
   updateSleepBox(sleep);
-  console.log(showFriendsNames(jarvis, newRepo))
-});
+})
+};
 
 function showFriendsNames(person, dataRepo) {
   const getFriends = dataRepo.allData.filter(data => person.friends.includes(data.id)).map(data => data.name)
@@ -75,3 +75,6 @@ function updateSleepBox(sleepRepo) {
   <p><b>All Time Average Hours Slept</b></p>
   <p>${sleepRepo.avgHoursSlept()}</p>`
 }
+
+// EVENT LISTENERS
+window.addEventListener("onload", makePromise());
