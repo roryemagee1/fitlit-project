@@ -4,7 +4,8 @@ import UserRepository from './UserRepository';
 import User from './User';
 import Hydration from './Hydration.js';
 import Sleep from './Sleep.js';
-import {getUserData, getSleepData, getHydrationData} from './apiCalls.js';
+// import {getUserData, getSleepData, getHydrationData} from './apiCalls.js';
+import {fetchData} from './apiCalls.js'
 
 
 // QUERY SELECTORS
@@ -14,7 +15,7 @@ const hydrationBox = document.querySelector('.hydration-box');
 const sleepBox = document.querySelector('.sleep-box')
 
 // DOM
-Promise.all([getUserData(), getHydrationData(), getSleepData()]).then(data => {
+Promise.all([fetchData(user), fetchData(sleep), fetchData(hydration)]).then(data => {
   let newRepo = new UserRepository(data[0].userData);
   let hydrationRepo = new UserRepository(data[1].hydrationData);
   let sleepRepo = new UserRepository(data[2].sleepData);
