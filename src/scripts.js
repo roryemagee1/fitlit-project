@@ -4,7 +4,9 @@ import UserRepository from './UserRepository';
 import User from './User';
 import Hydration from './Hydration.js';
 import Sleep from './Sleep.js';
-import {getUserData, getSleepData, getHydrationData} from './apiCalls.js';
+// import {getUserData, getSleepData, getHydrationData} from './apiCalls.js';
+import {fetchData} from './apiCalls.js';
+// import domUpdates from './domUpdates.js';
 
 
 // QUERY SELECTORS
@@ -14,24 +16,26 @@ const hydrationBox = document.querySelector('.hydration-box');
 const sleepBox = document.querySelector('.sleep-box')
 
 // DOM
-Promise.all([getUserData, getHydrationData, getSleepData]).then(data => {
+let makePromise = () => {Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep')]).then(data => {
   let newRepo = new UserRepository(data[0].userData);
   let hydrationRepo = new UserRepository(data[1].hydrationData);
   let sleepRepo = new UserRepository(data[2].sleepData);
   let jarvis = new User(newRepo.allData[1]);
   let hydration = new Hydration(jarvis.id, hydrationRepo);
   let sleep = new Sleep(jarvis.id, sleepRepo);
+  console.log(sleep);
   updateMainBox(jarvis, newRepo);
   updateHydrationBox(hydration);
   updateSleepBox(sleep);
-  console.log(showFriendsNames(jarvis, newRepo))
-});
+})
+};
 
 function showFriendsNames(person, dataRepo) {
   const getFriends = dataRepo.allData.filter(data => person.friends.includes(data.id)).map(data => data.name)
   return getFriends;
 }
 function updateMainBox(person, repo) {
+  // domUpdates.domMainBox(person, repo);
   welcomeBox.innerHTML += `
     <h1 class="welcome-tag">Welcome Back,</h1>
     <h2 class="name">${person.returnFirstName().toUpperCase()}</h2>
@@ -52,6 +56,7 @@ function updateMainBox(person, repo) {
 };
 
 function updateHydrationBox(hydraRepo) {
+  // domUpdates.domHydrationBox(hydraRepo);
   hydrationBox.innerHTML += `
   <p><b>Today's Water Consumption</b></p>
   <p>${hydraRepo.showTodaysOz()}</p>
@@ -60,6 +65,7 @@ function updateHydrationBox(hydraRepo) {
 }
 
 function updateSleepBox(sleepRepo) {
+  // domUpdates.domSleepBox(sleepRepo);
   sleepBox.innerHTML += `
   <p><b>Hours Slept from last week</b></p>
   <p>${sleepRepo.hoursSleptWeek('2020/01/16')}</p>
@@ -74,3 +80,6 @@ function updateSleepBox(sleepRepo) {
   <p><b>All Time Average Hours Slept</b></p>
   <p>${sleepRepo.avgHoursSlept()}</p>`
 }
+
+// EVENT LISTENERS
+window.addEventListener("onload", makePromise());
