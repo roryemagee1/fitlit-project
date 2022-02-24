@@ -5,7 +5,8 @@ import User from './User';
 import Hydration from './Hydration.js';
 import Sleep from './Sleep.js';
 // import {getUserData, getSleepData, getHydrationData} from './apiCalls.js';
-import {fetchData} from './apiCalls.js'
+import {fetchData} from './apiCalls.js';
+// import domUpdates from './domUpdates.js';
 
 
 // QUERY SELECTORS
@@ -34,6 +35,7 @@ function showFriendsNames(person, dataRepo) {
   return getFriends;
 }
 function updateMainBox(person, repo) {
+  // domUpdates.domMainBox(person, repo);
   welcomeBox.innerHTML += `
     <h1 class="welcome-tag">Welcome Back,</h1>
     <h2 class="name">${person.returnFirstName().toUpperCase()}</h2>
@@ -54,6 +56,7 @@ function updateMainBox(person, repo) {
 };
 
 function updateHydrationBox(hydraRepo) {
+  // domUpdates.domHydrationBox(hydraRepo);
   hydrationBox.innerHTML += `
   <p><b>Today's Water Consumption</b></p>
   <p>${hydraRepo.showTodaysOz()}</p>
@@ -62,6 +65,7 @@ function updateHydrationBox(hydraRepo) {
 }
 
 function updateSleepBox(sleepRepo) {
+  // domUpdates.domSleepBox(sleepRepo);
   sleepBox.innerHTML += `
   <p><b>Hours Slept from last week</b></p>
   <p>${sleepRepo.hoursSleptWeek('2020/01/16')}</p>
