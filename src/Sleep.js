@@ -3,7 +3,7 @@ class Sleep {
     this.id = id;
     this.sleepRepo = sleepRepo.allData;
   }
-  
+
   avgHoursSlept() {
     const output = this.sleepRepo.filter(data => data.userID === this.id).map(data => data.hoursSlept)
     return output.reduce((acc, curr) => acc + curr) / output.length;
@@ -11,16 +11,36 @@ class Sleep {
 
   avgSleepQuality() {
     const output = this.sleepRepo.filter(data => data.userID === this.id).map(data => data.sleepQuality)
-    return output.reduce((acc, curr) => acc + curr) / output.length;
+    const result = output.reduce((acc, curr) => {
+      if(!Number.isInteger(curr.sleepQuality) && !Number.isInteger(curr.id)) {
+        return 'Does not compute'
+      } else {
+        acc + curr
+      }
+      return acc
+    }, 0)
+    return result / output.length
   }
 
   hoursSleptDay(date) {
-    const output = this.sleepRepo.filter(data => data.userID === this.id).find(data => data.date === date)
+    const output = this.sleepRepo.filter(data => data.userID === this.id).find(data => {
+      if(!Number.isInteger(data.sleepQuality) && !Number.isInteger(data.id)) {
+        return 'Does not compute'
+      } else {
+      return data.date === date ?? 'Error'
+    }
+    })
     return output.hoursSlept
   }
 
   sleepQualityDay(date) {
-    const output = this.sleepRepo.filter(data => data.userID === this.id).find(data => data.date === date)
+    const output = this.sleepRepo.filter(data => data.userID === this.id).find(data => {
+      if(!Number.isInteger(data.sleepQuality) && !Number.isInteger(data.id)) {
+        return 'Does not compute'
+      } else {
+      return data.date === date
+      }
+    })
     return output.sleepQuality
   }
 
