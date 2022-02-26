@@ -27,7 +27,7 @@ class Sleep {
       if(!Number.isInteger(data.sleepQuality) && !Number.isInteger(data.id)) {
         return 'Does not compute'
       } else {
-      return data.date === date ?? 'Error'
+      return data.date === date
     }
     })
     return output.hoursSlept

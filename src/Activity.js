@@ -4,3 +4,5 @@ class Activity {
     this.activityRepo = activityRepo.allData;
   }
 }
+
+export default Activity;

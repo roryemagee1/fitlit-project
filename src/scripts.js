@@ -4,6 +4,7 @@ import UserRepository from './UserRepository';
 import User from './User';
 import Hydration from './Hydration.js';
 import Sleep from './Sleep.js';
+import Activity from './Activity.js';
 // import {getUserData, getSleepData, getHydrationData} from './apiCalls.js';
 import {fetchData} from './apiCalls.js';
 // import domUpdates from './domUpdates.js';
@@ -16,13 +17,16 @@ const hydrationBox = document.querySelector('.hydration-box');
 const sleepBox = document.querySelector('.sleep-box')
 
 // DOM
-let makePromise = () => {Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep')]).then(data => {
+let makePromise = () => {Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fetchData('activity')]).then(data => {
   let newRepo = new UserRepository(data[0].userData);
   let hydrationRepo = new UserRepository(data[1].hydrationData);
   let sleepRepo = new UserRepository(data[2].sleepData);
+  let activityRepo = new UserRepository(data[3].activityData)
   let jarvis = new User(newRepo.allData[1]);
   let hydration = new Hydration(jarvis.id, hydrationRepo);
   let sleep = new Sleep(jarvis.id, sleepRepo);
+  let activity = new Activity(jarvis.id, activityRepo);
+  console.log(activity.activityRepo.filter(data => data.userID <= 2))
   console.log(sleep);
   updateMainBox(jarvis, newRepo);
   updateHydrationBox(hydration);
