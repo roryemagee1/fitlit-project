@@ -8,12 +8,24 @@ import Activity from './Activity.js';
 import {fetchData} from './apiCalls.js';
 // import domUpdates from './domUpdates.js';
 
+const sleepURL = 'http://localhost:3001/api/v1/sleep';
+const hydrationURL = 'http://localhost:3001/api/v1/hydration';
 
 // QUERY SELECTORS
 const welcomeBox = document.querySelector('.welcome-box');
 const userStepGoalBox = document.querySelector('.user-step-goals');
 const hydrationBox = document.querySelector('.hydration-box');
-const sleepBox = document.querySelector('.sleep-box')
+const sleepBox = document.querySelector('.sleep-box');
+
+// const sleepDateInput = document.querySelector('.sleep-date-input');
+// const sleptHoursInput = document.querySelector('.slept-hours-input');
+// const sleepQualityInput document.querySelector('.sleep-quality-input');
+
+
+
+const sleepForm = document.querySelector('.sleep-form');
+const hydrationForm = document.querySelector('.hydration-form');
+const errorTag = document.querySelector('.js-error');
 
 // DOM
 let makePromise = () => {Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fetchData('activity')]).then(data => {
@@ -31,10 +43,42 @@ let makePromise = () => {Promise.all([fetchData('users'), fetchData('hydration')
 })
 };
 
+const displayError = (error) => {
+  console.log(">>>error")
+  console.log(error.message)
+  if(error.message === "Failed to fetch") {
+    errorTag.innerText = "Whoopsie"
+  } else {
+    errorTag.innerText = error.message
+  }
+}
+
+const postData = (url, newData) => {
+  fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(newData),
+    headers: { 'Content-Type': 'application/json' }
+  })
+  .then(response => {
+    console.log(response, "<>>>>>> response")
+    if(!response.ok) {
+      throw new Error(`Please make sure that all fields are filled in.  Missing parameter is ${requiredParameter}`);
+    } else {
+    response.json()
+  }
+  })
+  // .then(animal => addAnimalToPage(animal))
+  // .catch(error => displayError(error));
+}
+
+
+
+
 function showFriendsNames(person, dataRepo) {
   const getFriends = dataRepo.allData.filter(data => person.friends.includes(data.id)).map(data => data.name)
   return getFriends;
 }
+
 function updateMainBox(person, repo) {
   // domUpdates.domMainBox(person, repo);
   welcomeBox.innerHTML += `
@@ -84,3 +128,38 @@ function updateSleepBox(sleepRepo) {
 
 // EVENT LISTENERS
 window.addEventListener("onload", makePromise());
+
+hydrationForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const newHydrationEntry = {
+    // userID: parseInt(formData.get('user_id')),
+    userID: parseInt(e.target.id),
+    date: formData.get('date'),
+    numOunces: parseInt(formData.get('ounces')),
+  };
+  console.log(formData.get('user_id'))
+  postData(hydrationURL, newHydrationEntry);
+  makePromise()
+  e.target.reset();
+});
+
+sleepForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const newSleepEntry = {
+    // userID: parseInt(formData.get('user_id')),
+    userID: parseInt(e.target.id),
+    date: formData.get('date'),
+    hoursSlept: parseInt(formData.get('hours_slept')),
+    sleepQuality: parseInt(formData.get('sleep_quality'))
+    // userID: 2,
+    // date: sleepDataInput.value.replaceAll('-', '/'),
+    // hoursSlept: sleptHoursInput.value,
+    // sleepQuality: sleepQualityInput.value,
+  };
+  console.log(formData.get('user_id'))
+  postData(sleepURL, newSleepEntry);
+  makePromise()
+  e.target.reset();
+});
