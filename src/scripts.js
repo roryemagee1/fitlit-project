@@ -24,6 +24,7 @@ let makePromise = () => {Promise.all([fetchData('users'), fetchData('hydration')
   let jarvis = new User(newRepo.allData[1]);
   let hydration = new Hydration(jarvis.id, hydrationRepo);
   let sleep = new Sleep(jarvis.id, sleepRepo);
+  console.log(sleep);
   let activity = new Activity(jarvis.id, activityRepo);
   updateMainBox(jarvis, newRepo);
   updateHydrationBox(hydration);
