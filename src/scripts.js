@@ -8,12 +8,16 @@ import Activity from './Activity.js';
 import {fetchData} from './apiCalls.js';
 // import domUpdates from './domUpdates.js';
 
+const sleepURL = 'http://localhost:3001/api/v1/sleep'
 
 // QUERY SELECTORS
 const welcomeBox = document.querySelector('.welcome-box');
 const userStepGoalBox = document.querySelector('.user-step-goals');
 const hydrationBox = document.querySelector('.hydration-box');
-const sleepBox = document.querySelector('.sleep-box')
+const sleepBox = document.querySelector('.sleep-box');
+
+const sleepForm = document.querySelector('.sleep-form');
+const errorTag = document.querySelector('.js-error');
 
 // DOM
 let makePromise = () => {Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fetchData('activity')]).then(data => {
@@ -32,10 +36,42 @@ let makePromise = () => {Promise.all([fetchData('users'), fetchData('hydration')
 })
 };
 
+const displayError = (error) => {
+  console.log(">>>error")
+  console.log(error.message)
+  if(error.message === "Failed to fetch") {
+    errorTag.innerText = "Whoopsie"
+  } else {
+    errorTag.innerText = error.message
+  }
+}
+
+const postSleepData = (newSleepEntry) => {
+  fetch(sleepURL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newSleepEntry)
+  })
+  .then(response => {
+    console.log(response, "<>>>>>> response")
+    if(!response.ok) {
+      throw new Error(`Please make sure that all fields are filled in.  Mising parameter is ${requiredParameter}`);
+    } else {
+    response.json()
+  }
+  })
+  // .then(animal => addAnimalToPage(animal))
+  .catch(error => displayError(error));
+}
+
+
+
+
 function showFriendsNames(person, dataRepo) {
   const getFriends = dataRepo.allData.filter(data => person.friends.includes(data.id)).map(data => data.name)
   return getFriends;
 }
+
 function updateMainBox(person, repo) {
   // domUpdates.domMainBox(person, repo);
   welcomeBox.innerHTML += `
@@ -85,3 +121,19 @@ function updateSleepBox(sleepRepo) {
 
 // EVENT LISTENERS
 window.addEventListener("onload", makePromise());
+// EVENT LISTENERS
+
+sleepForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  // let sleep = new Sleep(jarvis.id, sleepRepo);
+  const newSleepEntry = {
+    // userID: animalsSection.childElementCount + 1,
+    userID: formData.get('user_id'),
+    date: formData.get('date'),
+    hoursSlept: formData.get('hours_slept'),
+    sleepQuality: formData.get('sleep_quality')
+  };
+  postSleepData(newSleepEntry);
+  e.target.reset();
+});
