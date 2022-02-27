@@ -8,7 +8,8 @@ import Activity from './Activity.js';
 import {fetchData} from './apiCalls.js';
 // import domUpdates from './domUpdates.js';
 
-const sleepURL = 'http://localhost:3001/api/v1/sleep'
+const sleepURL = 'http://localhost:3001/api/v1/sleep';
+const hydrationURL = 'http://localhost:3001/api/v1/hydration';
 
 // QUERY SELECTORS
 const welcomeBox = document.querySelector('.welcome-box');
@@ -23,6 +24,7 @@ const sleepBox = document.querySelector('.sleep-box');
 
 
 const sleepForm = document.querySelector('.sleep-form');
+const hydrationForm = document.querySelector('.hydration-form');
 const errorTag = document.querySelector('.js-error');
 
 // DOM
@@ -34,7 +36,6 @@ let makePromise = () => {Promise.all([fetchData('users'), fetchData('hydration')
   let jarvis = new User(newRepo.allData[1]);
   let hydration = new Hydration(jarvis.id, hydrationRepo);
   let sleep = new Sleep(jarvis.id, sleepRepo);
-  console.log(sleep);
   let activity = new Activity(jarvis.id, activityRepo);
   updateMainBox(jarvis, newRepo);
   updateHydrationBox(hydration);
@@ -52,10 +53,10 @@ const displayError = (error) => {
   }
 }
 
-const postSleepData = (param) => {
-  fetch(sleepURL, {
+const postData = (url, newData) => {
+  fetch(url, {
     method: 'POST',
-    body: JSON.stringify(param),
+    body: JSON.stringify(newData),
     headers: { 'Content-Type': 'application/json' }
   })
   .then(response => {
@@ -128,21 +129,37 @@ function updateSleepBox(sleepRepo) {
 // EVENT LISTENERS
 window.addEventListener("onload", makePromise());
 
+hydrationForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const newHydrationEntry = {
+    // userID: parseInt(formData.get('user_id')),
+    userID: parseInt(e.target.id),
+    date: formData.get('date'),
+    numOunces: parseInt(formData.get('ounces')),
+  };
+  console.log(formData.get('user_id'))
+  postData(hydrationURL, newHydrationEntry);
+  makePromise()
+  e.target.reset();
+});
+
 sleepForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const newSleepEntry = {
+    // userID: parseInt(formData.get('user_id')),
+    userID: parseInt(e.target.id),
+    date: formData.get('date'),
+    hoursSlept: parseInt(formData.get('hours_slept')),
+    sleepQuality: parseInt(formData.get('sleep_quality'))
     // userID: 2,
     // date: sleepDataInput.value.replaceAll('-', '/'),
     // hoursSlept: sleptHoursInput.value,
     // sleepQuality: sleepQualityInput.value,
-    userID: parseInt(formData.get('user_id')),
-    date: formData.get('date'),
-    hoursSlept: parseInt(formData.get('hours_slept')),
-    sleepQuality: parseInt(formData.get('sleep_quality'))
   };
   console.log(formData.get('user_id'))
-  postSleepData(newSleepEntry);
+  postData(sleepURL, newSleepEntry);
   makePromise()
   e.target.reset();
 });
