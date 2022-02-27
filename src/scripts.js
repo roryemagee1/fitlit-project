@@ -16,6 +16,12 @@ const userStepGoalBox = document.querySelector('.user-step-goals');
 const hydrationBox = document.querySelector('.hydration-box');
 const sleepBox = document.querySelector('.sleep-box');
 
+// const sleepDateInput = document.querySelector('.sleep-date-input');
+// const sleptHoursInput = document.querySelector('.slept-hours-input');
+// const sleepQualityInput document.querySelector('.sleep-quality-input');
+
+
+
 const sleepForm = document.querySelector('.sleep-form');
 const errorTag = document.querySelector('.js-error');
 
@@ -46,22 +52,22 @@ const displayError = (error) => {
   }
 }
 
-const postSleepData = (newSleepEntry) => {
+const postSleepData = (param) => {
   fetch(sleepURL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(newSleepEntry)
+    body: JSON.stringify(param),
+    headers: { 'Content-Type': 'application/json' }
   })
   .then(response => {
     console.log(response, "<>>>>>> response")
     if(!response.ok) {
-      throw new Error(`Please make sure that all fields are filled in.  Mising parameter is ${requiredParameter}`);
+      throw new Error(`Please make sure that all fields are filled in.  Missing parameter is ${requiredParameter}`);
     } else {
     response.json()
   }
   })
   // .then(animal => addAnimalToPage(animal))
-  .catch(error => displayError(error));
+  // .catch(error => displayError(error));
 }
 
 
@@ -121,19 +127,22 @@ function updateSleepBox(sleepRepo) {
 
 // EVENT LISTENERS
 window.addEventListener("onload", makePromise());
-// EVENT LISTENERS
 
 sleepForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
-  // let sleep = new Sleep(jarvis.id, sleepRepo);
   const newSleepEntry = {
-    // userID: animalsSection.childElementCount + 1,
-    userID: formData.get('user_id'),
+    // userID: 2,
+    // date: sleepDataInput.value.replaceAll('-', '/'),
+    // hoursSlept: sleptHoursInput.value,
+    // sleepQuality: sleepQualityInput.value,
+    userID: parseInt(formData.get('user_id')),
     date: formData.get('date'),
-    hoursSlept: formData.get('hours_slept'),
-    sleepQuality: formData.get('sleep_quality')
+    hoursSlept: parseInt(formData.get('hours_slept')),
+    sleepQuality: parseInt(formData.get('sleep_quality'))
   };
+  console.log(formData.get('user_id'))
   postSleepData(newSleepEntry);
+  makePromise()
   e.target.reset();
 });
