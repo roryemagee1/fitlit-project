@@ -6,7 +6,6 @@ import Hydration from './Hydration.js';
 import Sleep from './Sleep.js';
 import Activity from './Activity.js';
 import {fetchData} from './apiCalls.js';
-// import domUpdates from './domUpdates.js';
 
 const sleepURL = 'http://localhost:3001/api/v1/sleep';
 const hydrationURL = 'http://localhost:3001/api/v1/hydration';
@@ -16,13 +15,6 @@ const welcomeBox = document.querySelector('.welcome-box');
 const userStepGoalBox = document.querySelector('.user-step-goals');
 const hydrationBox = document.querySelector('.hydration-box');
 const sleepBox = document.querySelector('.sleep-box');
-
-// const sleepDateInput = document.querySelector('.sleep-date-input');
-// const sleptHoursInput = document.querySelector('.slept-hours-input');
-// const sleepQualityInput document.querySelector('.sleep-quality-input');
-
-
-
 const sleepForm = document.querySelector('.sleep-form');
 const hydrationForm = document.querySelector('.hydration-form');
 const errorTag = document.querySelector('.js-error');
@@ -80,7 +72,6 @@ function showFriendsNames(person, dataRepo) {
 }
 
 function updateMainBox(person, repo) {
-  // domUpdates.domMainBox(person, repo);
   welcomeBox.innerHTML += `
     <h1 class="welcome-tag">Welcome Back,</h1>
     <h2 class="name">${person.returnFirstName().toUpperCase()}</h2>
@@ -101,7 +92,6 @@ function updateMainBox(person, repo) {
 };
 
 function updateHydrationBox(hydraRepo) {
-  // domUpdates.domHydrationBox(hydraRepo);
   hydrationBox.innerHTML += `
   <p><b>Today's Water Consumption</b></p>
   <p>${hydraRepo.showTodaysOz()}</p>
@@ -110,7 +100,6 @@ function updateHydrationBox(hydraRepo) {
 }
 
 function updateSleepBox(sleepRepo) {
-  // domUpdates.domSleepBox(sleepRepo);
   sleepBox.innerHTML += `
   <p><b>Hours Slept from last week</b></p>
   <p>${sleepRepo.hoursSleptWeek('2020/01/16')}</p>
@@ -133,7 +122,6 @@ hydrationForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const newHydrationEntry = {
-    // userID: parseInt(formData.get('user_id')),
     userID: parseInt(e.target.id),
     date: formData.get('date'),
     numOunces: parseInt(formData.get('ounces')),
@@ -148,15 +136,10 @@ sleepForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const newSleepEntry = {
-    // userID: parseInt(formData.get('user_id')),
     userID: parseInt(e.target.id),
     date: formData.get('date'),
     hoursSlept: parseInt(formData.get('hours_slept')),
     sleepQuality: parseInt(formData.get('sleep_quality'))
-    // userID: 2,
-    // date: sleepDataInput.value.replaceAll('-', '/'),
-    // hoursSlept: sleptHoursInput.value,
-    // sleepQuality: sleepQualityInput.value,
   };
   console.log(formData.get('user_id'))
   postData(sleepURL, newSleepEntry);
