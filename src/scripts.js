@@ -6,7 +6,7 @@ import Hydration from './Hydration.js';
 import Sleep from './Sleep.js';
 import Activity from './Activity.js';
 import {fetchData} from './apiCalls.js';
-// import domUpdates from './domUpdates.js';
+import {updateMainBox, updateHydrationBox, updateSleepBox} from './domUpdates.js'
 
 const sleepURL = 'http://localhost:3001/api/v1/sleep';
 const hydrationURL = 'http://localhost:3001/api/v1/hydration';
@@ -16,13 +16,6 @@ const welcomeBox = document.querySelector('.welcome-box');
 const userStepGoalBox = document.querySelector('.user-step-goals');
 const hydrationBox = document.querySelector('.hydration-box');
 const sleepBox = document.querySelector('.sleep-box');
-
-// const sleepDateInput = document.querySelector('.sleep-date-input');
-// const sleptHoursInput = document.querySelector('.slept-hours-input');
-// const sleepQualityInput document.querySelector('.sleep-quality-input');
-
-
-
 const sleepForm = document.querySelector('.sleep-form');
 const hydrationForm = document.querySelector('.hydration-form');
 const errorTag = document.querySelector('.js-error');
@@ -74,57 +67,54 @@ const postData = (url, newData) => {
 
 
 
-function showFriendsNames(person, dataRepo) {
-  const getFriends = dataRepo.allData.filter(data => person.friends.includes(data.id)).map(data => data.name)
-  return getFriends;
-}
+// function showFriendsNames(person, dataRepo) {
+//   const getFriends = dataRepo.allData.filter(data => person.friends.includes(data.id)).map(data => data.name)
+//   return getFriends;
+// }
 
-function updateMainBox(person, repo) {
-  // domUpdates.domMainBox(person, repo);
-  welcomeBox.innerHTML += `
-    <h1 class="welcome-tag">Welcome Back,</h1>
-    <h2 class="name">${person.returnFirstName().toUpperCase()}</h2>
-    <p><b>Email:</b></p>
-    <p>${person.email}</p>
-    <p><b>Friends:</b></p>
-    <p>${showFriendsNames(person, repo)}</p>
-    <div class="step">
-      <div class="step-goal">
-        <p><b>Your step goal:</b></p>
-        <p>${person.dailyStepGoal} </p>
-      </div>
-      <div class="average-step">
-        <p><b>Average user step goal:</b></p>
-        <p>${repo.averageStepGoal()} </p>
-      </div>
-    </div>`
-};
-
-function updateHydrationBox(hydraRepo) {
-  // domUpdates.domHydrationBox(hydraRepo);
-  hydrationBox.innerHTML += `
-  <p><b>Today's Water Consumption</b></p>
-  <p>${hydraRepo.showTodaysOz()}</p>
-  <p><b>Water Consumption Over Last 7 Days</b></p>
-  <p>${hydraRepo.showWeeklyOz()}</p>`
-}
-
-function updateSleepBox(sleepRepo) {
-  // domUpdates.domSleepBox(sleepRepo);
-  sleepBox.innerHTML += `
-  <p><b>Hours Slept from last week</b></p>
-  <p>${sleepRepo.hoursSleptWeek('2020/01/16')}</p>
-  <p><b>Sleep Quality from last week</b></p>
-  <p>${sleepRepo.qualitySleepWeek('2020/01/16')}</p>
-  <p><b>Quality of Sleep Yesterday</b></p>
-  <p>${sleepRepo.sleepQualityDay('2020/01/20')}</p>
-  <p><b>Hours Slept Yesterday</b></p>
-  <p>${sleepRepo.hoursSleptDay('2020/01/20')}</p>
-  <p><b>All Time Average Sleep Quality</b></p>
-  <p>${sleepRepo.avgSleepQuality()}</p>
-  <p><b>All Time Average Hours Slept</b></p>
-  <p>${sleepRepo.avgHoursSlept()}</p>`
-}
+// function updateMainBox(person, repo) {
+//   welcomeBox.innerHTML += `
+//     <h1 class="welcome-tag">Welcome Back,</h1>
+//     <h2 class="name">${person.returnFirstName().toUpperCase()}</h2>
+//     <p><b>Email:</b></p>
+//     <p>${person.email}</p>
+//     <p><b>Friends:</b></p>
+//     <p>${showFriendsNames(person, repo)}</p>
+//     <div class="step">
+//       <div class="step-goal">
+//         <p><b>Your step goal:</b></p>
+//         <p>${person.dailyStepGoal} </p>
+//       </div>
+//       <div class="average-step">
+//         <p><b>Average user step goal:</b></p>
+//         <p>${repo.averageStepGoal()} </p>
+//       </div>
+//     </div>`
+// };
+//
+// function updateHydrationBox(hydraRepo) {
+//   hydrationBox.innerHTML += `
+//   <p><b>Today's Water Consumption</b></p>
+//   <p>${hydraRepo.showTodaysOz()}</p>
+//   <p><b>Water Consumption Over Last 7 Days</b></p>
+//   <p>${hydraRepo.showWeeklyOz()}</p>`
+// }
+//
+// function updateSleepBox(sleepRepo) {
+//   sleepBox.innerHTML += `
+//   <p><b>Hours Slept from last week</b></p>
+//   <p>${sleepRepo.hoursSleptWeek('2020/01/16')}</p>
+//   <p><b>Sleep Quality from last week</b></p>
+//   <p>${sleepRepo.qualitySleepWeek('2020/01/16')}</p>
+//   <p><b>Quality of Sleep Yesterday</b></p>
+//   <p>${sleepRepo.sleepQualityDay('2020/01/20')}</p>
+//   <p><b>Hours Slept Yesterday</b></p>
+//   <p>${sleepRepo.hoursSleptDay('2020/01/20')}</p>
+//   <p><b>All Time Average Sleep Quality</b></p>
+//   <p>${sleepRepo.avgSleepQuality()}</p>
+//   <p><b>All Time Average Hours Slept</b></p>
+//   <p>${sleepRepo.avgHoursSlept()}</p>`
+// }
 
 // EVENT LISTENERS
 window.addEventListener("onload", makePromise());
@@ -133,7 +123,6 @@ hydrationForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const newHydrationEntry = {
-    // userID: parseInt(formData.get('user_id')),
     userID: parseInt(e.target.id),
     date: formData.get('date'),
     numOunces: parseInt(formData.get('ounces')),
@@ -148,15 +137,10 @@ sleepForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const newSleepEntry = {
-    // userID: parseInt(formData.get('user_id')),
     userID: parseInt(e.target.id),
     date: formData.get('date'),
     hoursSlept: parseInt(formData.get('hours_slept')),
     sleepQuality: parseInt(formData.get('sleep_quality'))
-    // userID: 2,
-    // date: sleepDataInput.value.replaceAll('-', '/'),
-    // hoursSlept: sleptHoursInput.value,
-    // sleepQuality: sleepQualityInput.value,
   };
   console.log(formData.get('user_id'))
   postData(sleepURL, newSleepEntry);
