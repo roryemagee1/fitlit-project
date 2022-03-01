@@ -41,7 +41,8 @@ Additionally, steps were taken to improve the accessibility of the website so th
 
 ## Illustrations
 
-<img width="1428" alt="Screen Shot 2022-02-14 at 7 06 32 PM" src="https://user-images.githubusercontent.com/92279624/153973273-d3857732-5be9-4921-b721-98132e4b36a5.png">
+<img width="1356" alt="Screen Shot 2022-02-28 at 7 22 23 PM" src="https://user-images.githubusercontent.com/92283709/156093604-b386767c-0b8e-4e40-b8f5-d43d7e39a4de.png">
+
 
 ## Possible Future Extensions
 
