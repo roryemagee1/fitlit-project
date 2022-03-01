@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import UserRepository from '../src/UserRepository';
 import Activity from '../src/Activity';
 import activitySample from '../src/data/activity-sample.js';
-// import userData from '../src/data/users';
 
 describe('Activity', () => {
 
