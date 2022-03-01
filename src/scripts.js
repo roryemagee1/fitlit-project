@@ -67,10 +67,10 @@ const postData = (url, newData) => {
 
 
 
-function showFriendsNames(person, dataRepo) {
-  const getFriends = dataRepo.allData.filter(data => person.friends.includes(data.id)).map(data => data.name)
-  return getFriends;
-}
+// function showFriendsNames(person, dataRepo) {
+//   const getFriends = dataRepo.allData.filter(data => person.friends.includes(data.id)).map(data => data.name)
+//   return getFriends;
+// }
 
 // function updateMainBox(person, repo) {
 //   welcomeBox.innerHTML += `
